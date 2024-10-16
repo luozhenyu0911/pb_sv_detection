@@ -1,0 +1,33 @@
+samples:
+    # sample or id to use for generating targets
+    id: "m54238_180901_011437.Q20.fastq.gz"
+    fq_path: "/BIGDATA2/gzfezx_shhli_2/USER/luozhenyu/test/pbsv_test/fastqs"
+
+modules:
+    # modules to run
+    quality_control: True
+    mapping: True
+    sv_detection: True
+
+params:
+    smk_path: ""
+    PWD: ""
+    # the sequencing platform used
+    platform: "PacBio"
+    # paths to tools used by the pipeline
+    python3: "/BIGDATA2/gzfezx_shhli_2/miniconda3/envs/longreads/bin/python"
+    fastqc: "/BIGDATA2/gzfezx_shhli_2/miniconda3/envs/viromes/opt/fastqc-0.12.1/fastqc"
+    multiqc: "/BIGDATA2/gzfezx_shhli_2/miniconda3/envs/viromes/bin/multiqc"
+    SURVIVOR: "/BIGDATA2/gzfezx_shhli_2/miniconda3/envs/manta/bin/SURVIVOR"
+    # reference genome
+    ref_map_fa: "/BIGDATA2/gzfezx_shhli_2/database/GRCh38/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa"
+    ref_fa: "/BIGDATA2/gzfezx_shhli_2/database/GRCh38/GCA_000001405.15_GRCh38_no_alt_analysis_set.mmi"
+    trf_bed: "/BIGDATA2/gzfezx_shhli_2/software/pbsv/annotations/human_GRCh38_no_alt_analysis_set.trf.bed"
+    # ref_fa_chr: "/BIGDATA2/gzfezx_shhli_2/USER/luozhenyu/database/GRCh38/chr"
+    # # reference genome for hg37
+    # ref_map_fa: "/BIGDATA2/gzfezx_shhli_2/database/GRCh37/human_g1k_v37.fasta.mmi"
+    # ref_fa: "/BIGDATA2/gzfezx_shhli_2/database/GRCh37/human_g1k_v37.fasta"
+    # trf_bed: "/BIGDATA2/gzfezx_shhli_2/software/pbsv/annotations/human_g1k_v37.trf.bed"
+    # ref_fa_chr: "/WORK2/gzfezx_shhli_3/BioDatahub/human_reference/GRCh37/GRCh37.chrom"
+
+threads: 24

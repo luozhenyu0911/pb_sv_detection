@@ -11,7 +11,7 @@ PWD = config['params']['PWD']
 def run_all_input(wildcards):
     run_all_files = []
     if config['modules']['quality_control']:
-        run_all_files.append("data/multiqc_report.html".format(id = SAMPLE))
+        run_all_files.append("data/{id}.multiqc_report.html".format(id = SAMPLE))
     if config['modules']['mapping']:
         run_all_files.append("alns/{id}.sort.bam.bai".format(id = SAMPLE))
         run_all_files.append("alns/{id}.sort.bam".format(id = SAMPLE))
@@ -21,6 +21,7 @@ def run_all_input(wildcards):
         run_all_files.append("pbsv/{id}.pbsv.vcf".format(id = SAMPLE))
         run_all_files.append("svim/{id}.svim.vcf".format(id = SAMPLE))
         run_all_files.append("merged/{id}.merged.vcf".format(id = SAMPLE))
+        run_all_files.append("merged/{id}.merged_stat.txt".format(id = SAMPLE))
     return run_all_files
 
 
@@ -33,4 +34,4 @@ smk_path = config['params']['smk_path']
 include: smk_path+"/mapping.smk"
 include: smk_path+"/qc.smk"
 include: smk_path+"/sv_calling.smk"
-include: smk_path+"/metasv.smk"
+include: smk_path+"/statistics.smk"

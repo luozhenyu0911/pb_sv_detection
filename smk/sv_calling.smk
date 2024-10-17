@@ -2,14 +2,15 @@
 
 rule cuteSV:
     input:
-        "bam/{id}.sorted.bam"
+        "alns/{id}.sort.bam"
     output:
         "cuteSV/{id}.cuteSV.vcf"
     params:
-        ref = REF
-        outdir = "cuteSV"
+        ref = REF,
+        outdir = "cuteSV",
+        bai = "alns/{id}.sort.bam.bai"
     threads:
-        24
+        config['threads']
     shell:
         "cuteSV --genotype --max_cluster_bias_INS  1000 --diff_ratio_merging_INS 0.9 "
         "--max_cluster_bias_DEL 1000 --diff_ratio_merging_DEL 0.5 -t {threads} -s 2 -l 30 "
@@ -19,14 +20,15 @@ rule cuteSV:
 
 rule sniffles:
     input:
-        "bam/{id}.sorted.bam"
+        "alns/{id}.sort.bam"
     output:
         "sniffles/{id}.sniffles.vcf"
     params:
-        ref = REF
-        outdir = "sniffles"
+        ref = REF,
+        outdir = "sniffles",
+        bai = "alns/{id}.sort.bam.bai"
     threads:
-        24
+        config['threads']
     shell:
         "sniffles --minsvlen 30 -t {threads} -i {input} -v {output}"
 
@@ -34,15 +36,16 @@ rule sniffles:
 
 rule pbsv_step1:
     input:
-        bam = "bam/{id}.sorted.bam"
-        trf_bed = config['trf_bed']
+        bam = "alns/{id}.sort.bam",
+        trf_bed = config['params']['trf_bed']
     output:
         "pbsv/{id}.svsig.gz"
     params:
-        ref = REF
-        outdir = "pbsv"
+        ref = REF,
+        outdir = "pbsv",
+        bai = "alns/{id}.sort.bam.bai"
     threads:
-        24
+        config['threads']
     shell:
         "pbsv discover {input.bam} {output} --tandem-repeats {input.trf_bed}"
 
@@ -52,10 +55,10 @@ rule pbsv_step2:
     output:
         "pbsv/{id}.pbsv.vcf"
     params:
-        ref = REF
+        ref = REF,
         outdir = "pbsv"
     threads:
-        24
+        config['threads']
     shell:
         "pbsv call --gt-min-reads 2 -m 30 --hifi -j {threads} {params.ref} {input.svsig} {output}"
 
@@ -63,18 +66,19 @@ rule pbsv_step2:
 
 rule svim:
     input:
-        "bam/{id}.sorted.bam"
+        "alns/{id}.sort.bam"
     output:
         "svim/{id}.svim.vcf"
     params:
-        ref = REF
-        pwd = PWD
-        outdir = "svim"
+        ref = REF,
+        pwd = PWD,
+        outdir = "svim",
+        bai = "alns/{id}.sort.bam.bai"
     threads:
-        24
+        config['threads']
     shell:
         "svim alignment --minimum_depth 2 --min_sv_size 30 {params.outdir} {input} {params.ref} && "
-        "ln -s  {params.PWD}/{params.outdir}/variants.vcf {params.PWD}/{output} && "
+        "ln -s {params.pwd}/{params.outdir}/variants.vcf {output}"
 
 # merge SVs from different callers by SURVIVOR
 
@@ -87,7 +91,7 @@ rule merge_svs:
     output:
         "merged/{id}.merged.vcf"
     params:
-        SURVIVOR = config['SURVIVOR']
+        SURVIVOR = config['params']['SURVIVOR']
     shell:
         "ls {input} > vcf.list && {params.SURVIVOR} merge vcf.list 1000 2 1 1 0 50 {output}"
 

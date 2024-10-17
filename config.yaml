@@ -1,6 +1,7 @@
 samples:
     # sample or id to use for generating targets
-    id: "m54238_180901_011437.Q20.fastq.gz"
+    # id: "m54238_180901_011437"
+    id: "HG002_PacBio_CCS"
     fq_path: "/BIGDATA2/gzfezx_shhli_2/USER/luozhenyu/test/pbsv_test/fastqs"
 
 modules:
@@ -10,8 +11,9 @@ modules:
     sv_detection: True
 
 params:
-    smk_path: ""
-    PWD: ""
+    smk_path: "/BIGDATA2/gzfezx_shhli_2/USER/luozhenyu/script/pb_sv_detection/smk"
+    src: "/BIGDATA2/gzfezx_shhli_2/USER/luozhenyu/script/WGS_SV/src"
+    PWD: "/BIGDATA2/gzfezx_shhli_2/USER/luozhenyu/test/pbsv_snakemake"
     # the sequencing platform used
     platform: "PacBio"
     # paths to tools used by the pipeline
@@ -20,14 +22,14 @@ params:
     multiqc: "/BIGDATA2/gzfezx_shhli_2/miniconda3/envs/viromes/bin/multiqc"
     SURVIVOR: "/BIGDATA2/gzfezx_shhli_2/miniconda3/envs/manta/bin/SURVIVOR"
     # reference genome
-    ref_map_fa: "/BIGDATA2/gzfezx_shhli_2/database/GRCh38/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa"
-    ref_fa: "/BIGDATA2/gzfezx_shhli_2/database/GRCh38/GCA_000001405.15_GRCh38_no_alt_analysis_set.mmi"
+    ref_fa: "/BIGDATA2/gzfezx_shhli_2/database/GRCh38/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa"
+    ref_map_fa: "/BIGDATA2/gzfezx_shhli_2/database/GRCh38/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa.mmi"
     trf_bed: "/BIGDATA2/gzfezx_shhli_2/software/pbsv/annotations/human_GRCh38_no_alt_analysis_set.trf.bed"
     # ref_fa_chr: "/BIGDATA2/gzfezx_shhli_2/USER/luozhenyu/database/GRCh38/chr"
     # # reference genome for hg37
     # ref_map_fa: "/BIGDATA2/gzfezx_shhli_2/database/GRCh37/human_g1k_v37.fasta.mmi"
     # ref_fa: "/BIGDATA2/gzfezx_shhli_2/database/GRCh37/human_g1k_v37.fasta"
-    # trf_bed: "/BIGDATA2/gzfezx_shhli_2/software/pbsv/annotations/human_g1k_v37.trf.bed"
+    # trf_bed: "/BIGDATA2/gzfezx_shhli_2/software/pbsv/annotations/human_hs37d5.trf.bed"
     # ref_fa_chr: "/WORK2/gzfezx_shhli_3/BioDatahub/human_reference/GRCh37/GRCh37.chrom"
 
 threads: 24

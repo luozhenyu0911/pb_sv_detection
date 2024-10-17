@@ -4,7 +4,7 @@ source /BIGDATA2/gzfezx_shhli_2/miniconda3/etc/profile.d/conda.sh
 conda activate longreads
 
 pwd=
-smk=/BIGDATA2/gzfezx_shhli_2/software/script/WGS_SV/run.all.smk
+smk=/BIGDATA2/gzfezx_shhli_2/USER/luozhenyu/script/pb_sv_detection/smk/run.all.smk
 
 /BIGDATA2/gzfezx_shhli_2/miniconda3/envs/cnvnator/bin/snakemake \
 -d $pwd -c 24 -pk --configfile ${pwd}/config.yaml --default-resources tmpdir="\"${pwd}\"" \

@@ -20,7 +20,22 @@ rule index_bam:
         bam = "alns/{id}.sort.bam"
     output:
         bai = "alns/{id}.sort.bam.bai"
+    threads:
+        config["threads"]
     shell:
-        "samtools index {input.bam}"
+        "samtools index -@ {threads} {input.bam}"
 
-
+# calculate depth for the alignment file
+rule depth:
+    input:
+        bam = "alns/{id}.sort.bam",
+        bai = "alns/{id}.sort.bam.bai",
+        ref = REF
+    output:
+        "alns/{id}.mosdepth.summary.txt"
+    threads:
+        config["threads"]
+    params:
+        prefix = SAMPLE
+    shell:
+        "mosdepth {params.prefix} {input.bam} -t {threads} -f {input.ref} --fast-mode --no-per-base"

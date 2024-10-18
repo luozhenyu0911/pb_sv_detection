@@ -15,6 +15,7 @@ def run_all_input(wildcards):
     if config['modules']['mapping']:
         run_all_files.append("alns/{id}.sort.bam.bai".format(id = SAMPLE))
         run_all_files.append("alns/{id}.sort.bam".format(id = SAMPLE))
+        run_all_files.append("alns/{id}.mosdepth.summary.txt".format(id = SAMPLE))
     if config['modules']['sv_detection']:
         run_all_files.append("cuteSV/{id}.cuteSV.vcf".format(id = SAMPLE))
         run_all_files.append("sniffles/{id}.sniffles.vcf".format(id = SAMPLE))
